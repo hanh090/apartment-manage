@@ -6,14 +6,14 @@ import type { Contact } from '@/types';
 import { contacts as allContactsData } from '@/data/contacts';
 import ContactList from '@/components/contacts/ContactList';
 import { Skeleton } from '@/components/ui/skeleton';
-import OmniSearch from '@/components/contacts/OmniSearch'; // Re-added OmniSearch import
-// useSearch import removed
+import OmniSearch from '@/components/contacts/OmniSearch';
+import { useLocale } from '@/context/LocaleContext'; // Import useLocale
 
 export default function HomePage() {
-  // const { searchTerm } = useSearch(); // Removed useSearch hook
-  const [searchTerm, setSearchTerm] = useState(''); // Re-added local state for searchTerm
+  const [searchTerm, setSearchTerm] = useState('');
   const [allContacts, setAllContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { locale } = useLocale(); // Get current locale
 
   useEffect(() => {
     // Simulate data fetching
@@ -26,31 +26,31 @@ export default function HomePage() {
     if (!searchTerm.trim()) return allContacts;
     const lowerSearchTerm = searchTerm.toLowerCase();
     return allContacts.filter(contact =>
-      contact.name.toLowerCase().includes(lowerSearchTerm) ||
+      contact.name[locale].toLowerCase().includes(lowerSearchTerm) ||
       contact.phoneNumber.includes(searchTerm) || 
-      contact.shortDescription.toLowerCase().includes(lowerSearchTerm) ||
+      contact.shortDescription[locale].toLowerCase().includes(lowerSearchTerm) ||
       (contact.email && contact.email.toLowerCase().includes(lowerSearchTerm)) ||
-      contact.category.toLowerCase().includes(lowerSearchTerm)
+      contact.category[locale].toLowerCase().includes(lowerSearchTerm)
     );
-  }, [searchTerm, allContacts, isLoading]);
+  }, [searchTerm, allContacts, isLoading, locale]);
 
   const contactsByCategory = useMemo(() => {
     if (isLoading) return {};
     return filteredContacts.reduce((acc, contact) => {
-      const category = contact.category || 'Uncategorized';
+      const category = contact.category[locale] || 'Uncategorized';
       if (!acc[category]) {
         acc[category] = [];
       }
       acc[category].push(contact);
       return acc;
     }, {} as Record<string, Contact[]>);
-  }, [filteredContacts, isLoading]);
+  }, [filteredContacts, isLoading, locale]);
 
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 md:p-6">
-        <div className="my-6 md:my-8 w-4/5 mx-auto"> {/* Changed max-w-xl to w-4/5 */}
-          {/* Skeleton for search bar removed as it's now directly rendered */}
+        <div className="my-6 md:my-8 w-4/5 mx-auto">
+          {/* Skeleton for search bar can be re-added if needed */}
         </div>
         {[1, 2].map(i => (
           <div key={i} className="mb-10">
@@ -66,19 +66,35 @@ export default function HomePage() {
     );
   }
 
+  const noContactsMessage = useMemo(() => {
+    const messages = {
+      en: {
+        noMatch: "No contacts found matching your search.",
+        noContacts: "No contacts available.",
+        tryDifferentSearch: "Try a different search term or clear the search."
+      },
+      vi: {
+        noMatch: "Không tìm thấy liên hệ nào phù hợp với tìm kiếm của bạn.",
+        noContacts: "Không có liên hệ nào.",
+        tryDifferentSearch: "Hãy thử một cụm từ tìm kiếm khác hoặc xóa tìm kiếm."
+      }
+    };
+    return messages[locale];
+  }, [locale]);
+
   return (
     <div className="container mx-auto p-4 md:p-6">
-      <div className="my-6 md:my-8 w-4/5 mx-auto"> {/* Changed max-w-xl to w-4/5 */}
-        <OmniSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} /> {/* Re-added OmniSearch component */}
+      <div className="my-6 md:my-8 w-4/5 mx-auto">
+        <OmniSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       </div>
       
       {Object.keys(contactsByCategory).length === 0 && !isLoading ? (
          <div className="text-center py-10">
            <p className="text-xl text-muted-foreground">
-             {searchTerm ? "No contacts found matching your search." : "No contacts available."}
+             {searchTerm ? noContactsMessage.noMatch : noContactsMessage.noContacts}
            </p>
            {searchTerm && (
-            <p className="text-sm text-muted-foreground mt-2">Try a different search term or clear the search.</p>
+            <p className="text-sm text-muted-foreground mt-2">{noContactsMessage.tryDifferentSearch}</p>
            )}
          </div>
       ) : (

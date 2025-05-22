@@ -9,24 +9,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Globe, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export default function LanguageSwitcher() {
   const { locale, setLocale } = useLocale();
 
   const languages = [
-    { code: 'vi', name: 'Tiếng Việt' },
-    { code: 'en', name: 'English' },
+    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
   ];
 
-  const currentLanguageName = languages.find(lang => lang.code === locale)?.name || 'Tiếng Việt';
+  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
-          <Globe className="h-4 w-4" />
-          <span>{currentLanguageName}</span>
+          <span className="text-lg">{currentLanguage.flag}</span>
+          <span className="hidden sm:inline">{currentLanguage.name}</span>
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
@@ -37,8 +37,10 @@ export default function LanguageSwitcher() {
             onClick={() => setLocale(lang.code as 'vi' | 'en')}
             disabled={locale === lang.code}
             aria-current={locale === lang.code ? 'page' : undefined}
+            className="flex items-center gap-2"
           >
-            {lang.name}
+            <span className="text-lg">{lang.flag}</span>
+            <span>{lang.name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

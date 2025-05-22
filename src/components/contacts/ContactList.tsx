@@ -2,9 +2,10 @@
 import type { Contact } from '@/types';
 import ContactCard from './ContactCard';
 import { Folder } from 'lucide-react';
+// useLocale is not needed here as categoryName is already localized by HomePage
 
 interface ContactListProps {
-  categoryName: string;
+  categoryName: string; // This will be the localized category name
   contacts: Contact[];
 }
 

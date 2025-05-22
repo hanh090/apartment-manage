@@ -1,11 +1,17 @@
 
+export type LocalizedString = {
+  en: string;
+  vi: string;
+};
+
 export type Contact = {
   id: string;
-  name: string;
+  name: LocalizedString;
   phoneNumber: string;
-  shortDescription: string;
-  fullDescription: string;
+  shortDescription: LocalizedString;
+  fullDescription: LocalizedString;
   imageUrl: string;
-  category: string;
+  dataAiHint?: string;
+  category: LocalizedString;
   email?: string; // Optional email
 };
