@@ -1,14 +1,15 @@
+
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import type { Contact } from '@/types';
 import { contacts as allContactsData } from '@/data/contacts';
-import OmniSearch from '@/components/contacts/OmniSearch';
 import ContactList from '@/components/contacts/ContactList';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSearch } from '@/context/SearchContext';
 
 export default function HomePage() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm } = useSearch();
   const [allContacts, setAllContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,7 +25,7 @@ export default function HomePage() {
     const lowerSearchTerm = searchTerm.toLowerCase();
     return allContacts.filter(contact =>
       contact.name.toLowerCase().includes(lowerSearchTerm) ||
-      contact.phoneNumber.includes(searchTerm) || // Phone numbers might not need lowercasing if format is consistent
+      contact.phoneNumber.includes(searchTerm) || 
       contact.shortDescription.toLowerCase().includes(lowerSearchTerm) ||
       (contact.email && contact.email.toLowerCase().includes(lowerSearchTerm)) ||
       contact.category.toLowerCase().includes(lowerSearchTerm)
@@ -47,7 +48,7 @@ export default function HomePage() {
     return (
       <div className="container mx-auto p-4 md:p-6">
         <div className="my-6 md:my-8 max-w-xl mx-auto">
-          <Skeleton className="h-12 w-full rounded-lg" />
+          {/* Skeleton for search bar removed as it's now in header */}
         </div>
         {[1, 2].map(i => (
           <div key={i} className="mb-10">
@@ -65,7 +66,7 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-4 md:p-6">
-      <OmniSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      {/* OmniSearch component removed from here */}
       
       {Object.keys(contactsByCategory).length === 0 && !isLoading ? (
          <div className="text-center py-10">
