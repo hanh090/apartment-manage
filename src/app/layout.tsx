@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Toaster } from '@/components/ui/toaster';
-// SearchProvider import removed
+import { LocaleProvider } from '@/context/LocaleContext'; // Import LocaleProvider
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,14 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en"> {/* Consider setting lang dynamically based on locale in the future */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
-        {/* SearchProvider wrapper removed */}
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Toaster />
+        <LocaleProvider> {/* Wrap with LocaleProvider */}
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Toaster />
+        </LocaleProvider>
       </body>
     </html>
   );
