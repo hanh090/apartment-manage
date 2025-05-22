@@ -49,7 +49,7 @@ export default function HomePage() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 md:p-6">
-        <div className="my-6 md:my-8 max-w-xl mx-auto">
+        <div className="my-6 md:my-8 w-4/5 mx-auto"> {/* Changed max-w-xl to w-4/5 */}
           {/* Skeleton for search bar removed as it's now directly rendered */}
         </div>
         {[1, 2].map(i => (
@@ -68,7 +68,7 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-4 md:p-6">
-      <div className="my-6 md:my-8 max-w-xl mx-auto"> {/* Re-added wrapper for OmniSearch */}
+      <div className="my-6 md:my-8 w-4/5 mx-auto"> {/* Changed max-w-xl to w-4/5 */}
         <OmniSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} /> {/* Re-added OmniSearch component */}
       </div>
       
