@@ -46,6 +46,22 @@ export default function HomePage() {
     }, {} as Record<string, Contact[]>);
   }, [filteredContacts, isLoading, locale]);
 
+  const noContactsMessage = useMemo(() => {
+    const messages = {
+      en: {
+        noMatch: "No contacts found matching your search.",
+        noContacts: "No contacts available.",
+        tryDifferentSearch: "Try a different search term or clear the search."
+      },
+      vi: {
+        noMatch: "Không tìm thấy liên hệ nào phù hợp với tìm kiếm của bạn.",
+        noContacts: "Không có liên hệ nào.",
+        tryDifferentSearch: "Hãy thử một cụm từ tìm kiếm khác hoặc xóa tìm kiếm."
+      }
+    };
+    return messages[locale];
+  }, [locale]);
+
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 md:p-6">
@@ -65,22 +81,6 @@ export default function HomePage() {
       </div>
     );
   }
-
-  const noContactsMessage = useMemo(() => {
-    const messages = {
-      en: {
-        noMatch: "No contacts found matching your search.",
-        noContacts: "No contacts available.",
-        tryDifferentSearch: "Try a different search term or clear the search."
-      },
-      vi: {
-        noMatch: "Không tìm thấy liên hệ nào phù hợp với tìm kiếm của bạn.",
-        noContacts: "Không có liên hệ nào.",
-        tryDifferentSearch: "Hãy thử một cụm từ tìm kiếm khác hoặc xóa tìm kiếm."
-      }
-    };
-    return messages[locale];
-  }, [locale]);
 
   return (
     <div className="container mx-auto p-4 md:p-6">
