@@ -6,10 +6,12 @@ import type { Contact } from '@/types';
 import { contacts as allContactsData } from '@/data/contacts';
 import ContactList from '@/components/contacts/ContactList';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSearch } from '@/context/SearchContext';
+import OmniSearch from '@/components/contacts/OmniSearch'; // Re-added OmniSearch import
+// useSearch import removed
 
 export default function HomePage() {
-  const { searchTerm } = useSearch();
+  // const { searchTerm } = useSearch(); // Removed useSearch hook
+  const [searchTerm, setSearchTerm] = useState(''); // Re-added local state for searchTerm
   const [allContacts, setAllContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,7 +50,7 @@ export default function HomePage() {
     return (
       <div className="container mx-auto p-4 md:p-6">
         <div className="my-6 md:my-8 max-w-xl mx-auto">
-          {/* Skeleton for search bar removed as it's now in header */}
+          {/* Skeleton for search bar removed as it's now directly rendered */}
         </div>
         {[1, 2].map(i => (
           <div key={i} className="mb-10">
@@ -66,7 +68,9 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto p-4 md:p-6">
-      {/* OmniSearch component removed from here */}
+      <div className="my-6 md:my-8 max-w-xl mx-auto"> {/* Re-added wrapper for OmniSearch */}
+        <OmniSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} /> {/* Re-added OmniSearch component */}
+      </div>
       
       {Object.keys(contactsByCategory).length === 0 && !isLoading ? (
          <div className="text-center py-10">
