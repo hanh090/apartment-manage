@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"> {/* Consider setting lang dynamically based on locale in the future */}
+    <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
         <LocaleProvider> {/* Wrap with LocaleProvider */}
           <Header />
