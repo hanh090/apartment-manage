@@ -11,18 +11,19 @@ interface OmniSearchProps {
 
 export default function OmniSearch({ searchTerm, onSearchChange }: OmniSearchProps) {
   return (
-    <div className="my-8 md:my-10 max-w-2xl mx-auto">
+    <div className="my-8 md:my-10 max-w-3xl mx-auto"> {/* Increased max-width slightly */}
       <div className="relative">
-        <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-muted-foreground" />
+        <SearchIcon className="absolute left-5 top-1/2 transform -translate-y-1/2 h-8 w-8 text-muted-foreground" />
         <Input
           type="search"
           placeholder="Search contacts by name, number, description, category..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-12 pr-4 py-4 text-lg rounded-xl shadow-md focus:ring-accent focus:border-accent"
+          className="pl-16 pr-6 py-5 text-xl rounded-2xl shadow-xl border-2 border-input focus:border-accent focus:ring-2 focus:ring-accent placeholder:text-foreground/70"
           aria-label="Search contacts"
         />
       </div>
     </div>
   );
 }
+
