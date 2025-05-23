@@ -22,22 +22,25 @@ export default function ContactCard({ contact }: ContactCardProps) {
 
   const maskedPhoneNumber = useMemo(() => {
     if (!contact.phoneNumber) return '';
-    return contact.phoneNumber.slice(0, 3) + contact.phoneNumber.slice(3).replace(/\d/g, '*');
+    // Show first 3 digits, mask the rest of the digits only
+    const prefix = contact.phoneNumber.slice(0, 3);
+    const rest = contact.phoneNumber.slice(3);
+    return prefix + rest.replace(/\d/g, '*');
   }, [contact.phoneNumber]);
 
   const toggleLabels = useMemo(() => ({
-    show: locale === 'vi' ? 'Hiện SĐT' : 'Show Phone',
-    hide: locale === 'vi' ? 'Ẩn SĐT' : 'Hide Phone',
+    show: locale === 'vi' ? 'Hiện số điện thoại' : 'Show phone number',
+    hide: locale === 'vi' ? 'Ẩn số điện thoại' : 'Hide phone number',
   }), [locale]);
 
   const copyLabels = useMemo(() => ({
-    copy: locale === 'vi' ? 'Sao chép' : 'Copy',
+    copy: locale === 'vi' ? 'Sao chép SĐT' : 'Copy Phone Number',
     copiedSuccess: locale === 'vi' ? 'Đã sao chép SĐT!' : 'Phone number copied!',
     copiedError: locale === 'vi' ? 'Không thể sao chép' : 'Could not copy',
   }), [locale]);
 
   const handleCopyPhoneNumber = async () => {
-    if (!contact.phoneNumber || !showPhoneNumber) return; // Ensure number is shown before copying
+    if (!contact.phoneNumber || !showPhoneNumber) return;
     try {
       await navigator.clipboard.writeText(contact.phoneNumber);
       toast({
@@ -76,41 +79,40 @@ export default function ContactCard({ contact }: ContactCardProps) {
       </CardContent>
       <CardFooter className="flex-col items-stretch pt-4 gap-3">
         {contact.phoneNumber && (
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center">
-              <Phone className="h-4 w-4 mr-1.5 text-muted-foreground" />
-              <span className="text-muted-foreground">
-                {showPhoneNumber ? contact.phoneNumber : maskedPhoneNumber}
-              </span>
-            </div>
-            <div className="flex items-center gap-1">
+          <>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center">
+                <Phone className="h-4 w-4 mr-1.5 text-muted-foreground" />
+                <span className="text-muted-foreground">
+                  {showPhoneNumber ? contact.phoneNumber : maskedPhoneNumber}
+                </span>
+              </div>
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon" 
                 onClick={() => setShowPhoneNumber(!showPhoneNumber)}
-                className="px-2 py-1 h-auto text-xs flex items-center"
+                className="h-8 w-8" // Adjusted size for icon-only button
                 aria-label={showPhoneNumber ? toggleLabels.hide : toggleLabels.show}
               >
                 {showPhoneNumber ? (
-                  <EyeOff className="h-3.5 w-3.5 mr-1" />
+                  <EyeOff className="h-4 w-4" />
                 ) : (
-                  <Eye className="h-3.5 w-3.5 mr-1" />
+                  <Eye className="h-4 w-4" />
                 )}
-                {showPhoneNumber ? toggleLabels.hide : toggleLabels.show}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopyPhoneNumber}
-                className="px-2 py-1 h-auto text-xs flex items-center"
-                aria-label={copyLabels.copy}
-                disabled={!showPhoneNumber}
-              >
-                <Copy className="h-3.5 w-3.5 mr-1" />
-                {copyLabels.copy}
               </Button>
             </div>
-          </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleCopyPhoneNumber}
+              className="w-full"
+              aria-label={copyLabels.copy}
+              disabled={!showPhoneNumber}
+            >
+              <Copy className="h-3.5 w-3.5 mr-1" />
+              {copyLabels.copy}
+            </Button>
+          </>
         )}
         <Button asChild variant="outline" size="sm" className="w-full group">
           <Link href={`/contacts/${contact.id}`}>
