@@ -7,9 +7,9 @@ import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Phone, ArrowRight, Eye, EyeOff, Copy } from 'lucide-react'; // Added Copy
+import { Phone, ArrowRight, Eye, EyeOff, Copy } from 'lucide-react';
 import { useLocale } from '@/context/LocaleContext';
-import { useToast } from '@/hooks/use-toast'; // Added useToast
+import { useToast } from '@/hooks/use-toast';
 
 interface ContactCardProps {
   contact: Contact;
@@ -17,7 +17,7 @@ interface ContactCardProps {
 
 export default function ContactCard({ contact }: ContactCardProps) {
   const { locale } = useLocale();
-  const { toast } = useToast(); // Initialize toast
+  const { toast } = useToast();
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 
   const maskedPhoneNumber = useMemo(() => {
@@ -37,7 +37,7 @@ export default function ContactCard({ contact }: ContactCardProps) {
   }), [locale]);
 
   const handleCopyPhoneNumber = async () => {
-    if (!contact.phoneNumber) return;
+    if (!contact.phoneNumber || !showPhoneNumber) return; // Ensure number is shown before copying
     try {
       await navigator.clipboard.writeText(contact.phoneNumber);
       toast({
@@ -83,7 +83,7 @@ export default function ContactCard({ contact }: ContactCardProps) {
                 {showPhoneNumber ? contact.phoneNumber : maskedPhoneNumber}
               </span>
             </div>
-            <div className="flex items-center gap-1"> {/* Group for action buttons */}
+            <div className="flex items-center gap-1">
               <Button
                 variant="ghost"
                 size="sm"
@@ -98,18 +98,17 @@ export default function ContactCard({ contact }: ContactCardProps) {
                 )}
                 {showPhoneNumber ? toggleLabels.hide : toggleLabels.show}
               </Button>
-              {showPhoneNumber && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleCopyPhoneNumber}
-                  className="px-2 py-1 h-auto text-xs flex items-center"
-                  aria-label={copyLabels.copy}
-                >
-                  <Copy className="h-3.5 w-3.5 mr-1" />
-                  {copyLabels.copy}
-                </Button>
-              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleCopyPhoneNumber}
+                className="px-2 py-1 h-auto text-xs flex items-center"
+                aria-label={copyLabels.copy}
+                disabled={!showPhoneNumber}
+              >
+                <Copy className="h-3.5 w-3.5 mr-1" />
+                {copyLabels.copy}
+              </Button>
             </div>
           </div>
         )}
