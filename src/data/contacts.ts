@@ -8,7 +8,7 @@ export const contacts: Contact[] = [
       en: 'Alice Wonderland',
       vi: 'Alice ở Xứ Sở Thần Tiên',
     },
-    phoneNumber: '555-0101',
+    phoneNumber: '5550101123', // Updated to 10 digits
     shortDescription: {
       en: 'Curious adventurer, tea party enthusiast.',
       vi: 'Nhà thám hiểm tò mò, người đam mê tiệc trà.',
@@ -31,7 +31,7 @@ export const contacts: Contact[] = [
       en: 'Bob The Builder',
       vi: 'Bob Thợ Xây',
     },
-    phoneNumber: '555-0102',
+    phoneNumber: '5550102234', // Updated to 10 digits
     shortDescription: {
       en: 'Can he fix it? Yes, he can!',
       vi: 'Anh ấy sửa được không? Được chứ!',
@@ -54,7 +54,7 @@ export const contacts: Contact[] = [
       en: 'Charlie Brown',
       vi: 'Charlie Brown',
     },
-    phoneNumber: '555-0103',
+    phoneNumber: '5550103345', // Updated to 10 digits
     shortDescription: {
       en: 'Good grief! Lovable loser.',
       vi: 'Trời ơi! Kẻ thất bại đáng yêu.',
@@ -76,14 +76,14 @@ export const contacts: Contact[] = [
       en: 'Diana Prince',
       vi: 'Diana Prince',
     },
-    phoneNumber: '555-0104',
+    phoneNumber: '5550104456', // Updated to 10 digits
     shortDescription: {
       en: 'Amazonian princess, warrior for peace.',
       vi: 'Công chúa Amazon, chiến binh vì hòa bình.',
     },
     fullDescription: {
       en: 'Diana, also known as Wonder Woman, is a founding member of the Justice League. She possesses superhuman strength, agility, and the Lasso of Truth. She fights for justice and equality.',
-      vi: 'Diana, còn được biết đến là Wonder Woman, là một thành viên sáng lập của Justice League. Cô sở hữu sức mạnh siêu phàm, sự nhanh nhẹn và Thòng Lọng Sự Thật. Cô chiến đấu vì công lý và bình đẳng.',
+      vi: 'Diana, còn được biết đến là Wonder Woman, là một thành viên sáng lập của Justice League. Cô sở hữu sức mạnh siêu phàm, sự nhanh nhịn và Thòng Lọng Sự Thật. Cô chiến đấu vì công lý và bình đẳng.',
     },
     imageUrl: 'https://placehold.co/300x300.png',
     dataAiHint: 'woman superhero',
@@ -99,7 +99,7 @@ export const contacts: Contact[] = [
       en: 'Edward Scissorhands',
       vi: 'Edward Tay Kéo',
     },
-    phoneNumber: '555-0105',
+    phoneNumber: '5550105567', // Updated to 10 digits
     shortDescription: {
       en: 'Gentle soul with an unusual talent.',
       vi: 'Tâm hồn hiền lành với tài năng khác thường.',
@@ -121,7 +121,7 @@ export const contacts: Contact[] = [
       en: 'Fiona Gallagher',
       vi: 'Fiona Gallagher',
     },
-    phoneNumber: '555-0106',
+    phoneNumber: '5550106678', // Updated to 10 digits
     shortDescription: {
       en: 'Matriarch of the Gallagher family.',
       vi: 'Trụ cột của gia đình Gallagher.',
@@ -144,7 +144,7 @@ export const contacts: Contact[] = [
       en: 'Dr. Gregory House',
       vi: 'Bác sĩ Gregory House',
     },
-    phoneNumber: '555-0107',
+    phoneNumber: '5550107789', // Updated to 10 digits
     shortDescription: {
       en: 'Brilliant, misanthropic diagnostician.',
       vi: 'Nhà chẩn đoán xuất sắc, ghét người.',
@@ -166,7 +166,7 @@ export const contacts: Contact[] = [
       en: 'Hermione Granger',
       vi: 'Hermione Granger',
     },
-    phoneNumber: '555-0108',
+    phoneNumber: '5550108890', // Updated to 10 digits
     shortDescription: {
       en: 'Brightest witch of her age.',
       vi: 'Phù thủy thông minh nhất tuổi của cô ấy.',

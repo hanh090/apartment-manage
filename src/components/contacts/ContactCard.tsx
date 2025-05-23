@@ -21,11 +21,11 @@ export default function ContactCard({ contact }: ContactCardProps) {
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 
   const maskedPhoneNumber = useMemo(() => {
-    if (!contact.phoneNumber) return '';
-    // Show first 3 digits, mask the rest of the digits only
-    const prefix = contact.phoneNumber.slice(0, 3);
-    const rest = contact.phoneNumber.slice(3);
-    return prefix + rest.replace(/\d/g, '*');
+    if (!contact.phoneNumber || contact.phoneNumber.length < 3) return '***'; // Fallback for very short numbers
+    // Show last 3 digits, mask the preceding digits (up to 7)
+    const visiblePart = contact.phoneNumber.slice(-3);
+    const maskedPart = '*'.repeat(Math.max(0, contact.phoneNumber.length - 3));
+    return maskedPart + visiblePart;
   }, [contact.phoneNumber]);
 
   const toggleLabels = useMemo(() => ({
@@ -91,7 +91,7 @@ export default function ContactCard({ contact }: ContactCardProps) {
                 variant="ghost"
                 size="icon" 
                 onClick={() => setShowPhoneNumber(!showPhoneNumber)}
-                className="h-8 w-8" // Adjusted size for icon-only button
+                className="h-8 w-8" 
                 aria-label={showPhoneNumber ? toggleLabels.hide : toggleLabels.show}
               >
                 {showPhoneNumber ? (
